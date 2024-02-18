@@ -23,4 +23,5 @@ struct Token {
     int column;
 };
 
+static char* substring(const char* text, int start, int end)
 struct Token* tokenize(const char* text);

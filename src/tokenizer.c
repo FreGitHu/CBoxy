@@ -4,6 +4,24 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+static char* substring(const char* text, int start, int end) {
+    // Calculate the length of the substring
+    int length = end - start + 1;
+
+    // Allocate memory for the substring (+1 for the null terminator)
+    char* substr = (char*)malloc((length + 1) * sizeof(char));
+    if (substr == NULL) {
+        printf("Fatal Error: Memory allocation failed\n");
+        exit(1); // Exit the program on failure
+    }
+
+    // Copy the substring from the original string
+    strncpy(substr, &text[start], length);
+    substr[length] = '\0'; // Null-terminate the substring
+
+    return substr;
+}
+
 struct Token* tokenize(const char* text) {
     struct Token* tokens = malloc(0);
     int numtokens = 0;
@@ -28,7 +46,7 @@ struct Token* tokenize(const char* text) {
 
             struct Token numtoken = {0};
             numtoken.type = IntType;
-            numtoken.data = "int";
+            numtoken.data = substring(text, start, end);
             numtoken.column = i;
             numtoken.line = 0;
             numtokens++;
